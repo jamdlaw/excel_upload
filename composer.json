@@ -1,0 +1,6 @@
+{
+  "require": {
+    "phpoffice/phpexcel": "dev-master",
+	  "phpunit/phpunit": "5.5.*"
+  }
+}
