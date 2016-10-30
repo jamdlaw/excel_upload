@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<title>Parse An excel file</title>
+  	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  	<title>Excel upload</title>
+</head>
+</head>
+<body>
+<!-- for is posted to 'upload.php', via ajax -->
+<form id="fileUploadForm">
+	<label for="requestOutput"> Select an output</label>
+	<select name="requestOutput" id="requestOutput">
+	    <option value="JSON"> JSON </option>
+	    <option value="XML"> XML </option>
+	    <option value="CSV"> CSV </option> <!-- maybe one we can let them choose what delimiter, like pipe and not comma -->
+	    <option value="HTML"> HTML </option>
+	    <option value='PHPobjects'> PHP objects </option> 
+    </select>
+    <br>
+    Select a to upload please:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <br>
+    <input type="submit" value="Upload A file" name="submit">
+</form>
+<!-- empty div to display the results -->
+<div id="results"></div>
+	<script>
+		// Variable to store your files
+		var files;
+		var requestedOutput = $('#requestOutput').val();
+		// Add events ------------------------------------
+		$('input[type=file]').on('change', prepareUpload);
+		//adding another event to the script 
+		$('#requestOutput').on('change', prepareOutput);
+		//deal with the form submit
+		$('#fileUploadForm').on('submit', uploadFiles);
+		//-----------------------------------------------
+		// Grab the files and set them to our variable
+		function prepareUpload(event)
+			{
+		  	files = event.target.files;	
+			}
+		function prepareOutput(event)
+			{
+			requestedOutput	= event.target.value;
+			}	
+		// Catch the form submit and upload the files
+		function uploadFiles(event)
+			{
+		    event.stopPropagation(); // Stop stuff happening
+		    event.preventDefault(); // Totally stop stuff happening
+		    // START A LOADING SPINNER HERE
+
+		    // Create a formdata object and add the files
+		    var data = new FormData();
+		    $.each(files, function(key, value)
+		    	{
+				data.append(key, value);
+		    	}); 
+		    // add the format the user would like
+			data.append('requestedOutput' ,requestedOutput);
+		    
+		    $.ajax({
+			        url: 'upload.php',
+			        type: 'POST',
+			        data: data,
+			        cache: false,
+			        //dataType: formData, //'json'
+			        processData: false, // Don't process the files
+			        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+			        success: function(data, textStatus, jqXHR)
+			        {
+			            if(typeof data.error === 'undefined')
+			            {
+			            // Success so call function to process the form
+			           	// submitForm(event, data);
+			           	$('#results').empty();
+			           	$('#results').append(data);
+			            }
+			            else
+			            {
+			            // Handle errors here
+			            console.log('ERRORS: ' + data.error);
+			            }
+			        },
+			        error: function(jqXHR, textStatus, errorThrown)
+			        {
+			            // Handle errors here
+			            console.log('ERRORS ajax: ' + textStatus);
+			            console.log(errorThrown);
+			            // STOP LOADING SPINNER
+			        }
+	   		 	});
+			}
+	</script>
+</body>
+</html>
