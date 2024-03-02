@@ -1,3 +1,59 @@
-vendor/
+# Composer dependencies
+/vendor/
+
+# Composer's local repository of downloaded package files
 composer.lock
 
+# Log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Project's temporary files
+/tmp/
+/cache/
+!/cache/.gitkeep
+/logs/
+!/logs/.gitkeep
+/sessions/
+!/sessions/.gitkeep
+
+# File uploads
+/public/uploads/
+
+# Environment files
+/.env
+/.env.local
+/.env.*.local
+
+# IDE and editor folders
+/.idea/
+/.vscode/
+*.swp
+*~ 
+.DS_Store
+
+# Node.js dependencies
+/node_modules/
+
+# Build artifacts
+/public/build/
+/public/bundles/
+
+# PHPUnit
+/phpunit.xml
+/phpunit.xml.dist
+/coverage/
+
+# Exported databases
+*.dump.sql
+
+# OS or Editor folders
+Thumbs.db
+.DS_Store
+
+# Other common directories not to be committed
+/vendor/
+/node_modules/
+/npm-debug.log
+/yarn-error.log
