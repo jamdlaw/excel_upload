@@ -1,6 +1,6 @@
 {
   "require": {
-    "phpoffice/phpexcel": "dev-master",
-	  "phpunit/phpunit": "5.5.*"
+    "phpoffice/phpspreadsheet": "^1.25", 
+    "phpunit/phpunit": "^9.5"
   }
 }
